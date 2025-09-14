@@ -1,0 +1,42 @@
+{
+  "name": "chirp-notes",
+  "version": "1.0.0",
+  "description": "Dark Theme Not Alma Uygulaması - Chirp INC.",
+  "main": "main.js",
+  "productName": "Chirp Notes",
+  "author": "Chirp INC.",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "publish": "electron-builder --publish always"
+  },
+  "build": {
+    "appId": "com.chirp.notes",
+    "productName": "Chirp Notes",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "Mavilyy",
+      "repo": "chirp-notes"
+    }
+  },
+  "devDependencies": {
+    "electron": "^25.0.0",
+    "electron-builder": "^23.6.0"
+  },
+  "dependencies": {
+    "electron-updater": "^5.3.0"
+  }
+}

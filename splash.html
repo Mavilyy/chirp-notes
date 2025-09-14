@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chirp Notes Başlatılıyor...</title>
+    <link rel="stylesheet" href="splash.css">
+</head>
+<body>
+    <div class="splash-container">
+        <div class="logo-section">
+            <div class="bird-icon">🐦</div>
+            <div class="app-name">CHIRP NOTES</div>
+            <div class="tagline">Dark Theme Not Alma</div>
+        </div>
+        
+        <div class="loading-section">
+            <div class="loading-bar">
+                <div class="loading-progress" id="progressBar"></div>
+            </div>
+            <div class="loading-text" id="loadingText">Uygulama hazırlanıyor...</div>
+            <div class="update-info" id="updateInfo" style="display: none;">
+                <div class="update-progress" id="updateProgress"></div>
+                <div class="update-bar">
+                    <div class="update-progress-bar" id="updateProgressBar"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="developer">Chirp INC. tarafından geliştirildi</div>
+            <div class="version">Sürüm 1.0.0</div>
+        </div>
+    </div>
+
+    <script>
+        let progress = 0;
+        const progressBar = document.getElementById('progressBar');
+        const loadingText = document.getElementById('loadingText');
+        const updateInfo = document.getElementById('updateInfo');
+        const updateProgress = document.getElementById('updateProgress');
+        const updateProgressBar = document.getElementById('updateProgressBar');
+        
+        const loadingMessages = [
+            "Uygulama hazırlanıyor...",
+            "Notlar yükleniyor...",
+            "Arayüz ayarlanıyor...",
+            "Hazır!"
+        ];
+        
+        let messageIndex = 0;
+        
+        // Progress bar animasyonu
+        const progressInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(progressInterval);
+            }
+            
+            progressBar.style.width = progress + '%';
+            
+            if (progress > (messageIndex + 1) * 25 && messageIndex < loadingMessages.length - 1) {
+                messageIndex++;
+                loadingText.textContent = loadingMessages[messageIndex];
+            }
+        }, 100);
+
+        // Electron IPC ile mesajları dinle
+        const { ipcRenderer } = require('electron');
+
+        ipcRenderer.on('update-message', (event, message) => {
+            loadingText.textContent = message;
+        });
+
+        ipcRenderer.on('update-progress', (event, message) => {
+            updateInfo.style.display = 'block';
+            updateProgress.textContent = message;
+        });
+
+        ipcRenderer.on('update-progress-value', (event, percent) => {
+            updateProgressBar.style.width = percent + '%';
+        });
+    </script>
+</body>
+</html>

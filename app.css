@@ -1,0 +1,18 @@
+/* Önceki CSS içeriği aynı, sadece şu değişiklikler: */
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn.secondary {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+}
+
+.btn.secondary:hover {
+    background: #475569;
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
